@@ -15,8 +15,8 @@
 2. Deployment
     - heroku create xxxx (/bin/bash)
     - heroku config:set NPM_CONFIG_PRODUCTION=false (/bin/bash)
-    - heroku config:set HOST=0.0.0.0 (/bin/bash)
-    - heroku config:set NODE_ENV=production (/bin/bash)
+    - heroku config:set HOST=0.0.0.0 --app=five-starts-agancy (/bin/bash)
+    - heroku config:set NODE_ENV=production --app=five-starts-agancy (/bin/bash)
     - "heroku-postbuild": "npm run build" (package.json)
     - web: nuxt start (Procfile)
     - git push heroku master (/bin/bash)
