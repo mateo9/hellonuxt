@@ -435,11 +435,7 @@ export default {
     },
     methods: {
         handleScroll () {
-           if(window.scrollY > 700) {
-               document.getElementById('header-five').className = 's-header sticky offset scrolling'
-           } else {
-               document.getElementById('header-five').className = 's-header'
-           }
+
         },
         openMobile() {
             this.isActive = !this.isActive;
@@ -478,14 +474,10 @@ export default {
         }
     },
     created () {
-        if (process.client) {
-            window.addEventListener('scroll', this.handleScroll);
-        }
+
     },
     destroyed () {
-        if (process.client) {
-            window.removeEventListener('scroll', this.handleScroll);
-        }
+
     },
     head() {
         return {
