@@ -24,6 +24,9 @@ async function start () {
 	}
 
 	// Give nuxt middleware to express
+	app.get('/test', function (req, res) {
+		res.send('hello world')
+	  })
 	app.use(nuxt.render)
 
 	// Listen the server
