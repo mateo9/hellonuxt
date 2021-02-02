@@ -406,7 +406,6 @@ sveučilišnim obrazovanjem iz područja turizma i marketinga. Višegodišnje is
 </template>
 <script>
 import axios from 'axios'
-import { Carousel, Slide } from 'vue-carousel';
 
 
 export default {
@@ -429,10 +428,6 @@ export default {
       }
     }
   },
-    components: {
-        Carousel,
-        Slide
-    },
     methods: {
         handleScroll () {
 
