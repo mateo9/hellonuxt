@@ -1,5 +1,5 @@
 daemon off;
-#Heroku dynos have at least 4 cores.
+# Heroku dynos have at least 4 cores.
 worker_processes <%= ENV['NGINX_WORKERS'] || 4 %>;
 
 events {
@@ -7,17 +7,11 @@ events {
 	accept_mutex on;
 	worker_connections <%= ENV['NGINX_WORKER_CONNECTIONS'] || 1024 %>;
 }
-# From https://nuxtjs.org/faq/nginx-proxy/
-map $sent_http_content_type $expires {
-    "text/html"                 epoch;
-    "text/html; charset=utf-8"  epoch;
-    default                     off;
-}
 
 http {
-        gzip on;
-        gzip_comp_level 2;
-        gzip_min_length 512;
+	gzip on;
+	gzip_comp_level 2;
+	gzip_min_length 512;
 
 	server_tokens off;
 
@@ -29,12 +23,12 @@ http {
 	default_type application/octet-stream;
 	sendfile on;
 
-	#Must read the body in 5 seconds.
+	# Must read the body in 5 seconds.
 	client_body_timeout 5;
 
 	upstream app_server {
 		server unix:/tmp/nginx.socket fail_timeout=0;
- 	}
+	}
 
 	server {
 		listen <%= ENV["PORT"] %>;
@@ -42,10 +36,15 @@ http {
 		keepalive_timeout 5;
 
 		location / {
+			# Uncomment this if statement to force SSL/redirect http -> https
+			if ($http_x_forwarded_proto != "https") {
+			   return 301 https://$host$request_uri;
+			 }
+
 			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 			proxy_set_header Host $http_host;
 			proxy_redirect off;
-			proxy_pass http://app_server;
+			proxy_pass http://5star.hr;
 		}
 	}
 }
