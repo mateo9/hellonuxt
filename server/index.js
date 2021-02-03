@@ -24,9 +24,6 @@ async function start () {
 	}
 
 	// Give nuxt middleware to express
-	app.get('/test', function (req, res) {
-		res.send('hello world')
-	  })
 	app.use(nuxt.render)
 
 	// Listen the server
@@ -36,6 +33,19 @@ async function start () {
 		console.log("Signalling nginx buildpack to start listening")
 		fs.openSync('/tmp/app-initialized', 'w')
 	})
+
+	app.get('/test', function (req, res) {
+		res.send('hello world')
+	})
+
+	if (process.env.NODE_ENV === 'production') {
+		app.use(express.static('layouts'));
+	}
+
+	app.get('*', (request, response) => {
+		console.log('try this')
+		response.sendFile(path.join(__dirname, 'layouts', 'default.vue'));
+	});
 	
 	consola.ready({
 		message: `Server listening on http://${host}:${port}`,
